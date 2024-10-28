@@ -1,0 +1,56 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%post
+
+    echo -e "\e[34mDEPENDENCIES\e[0m"
+    apt update && apt install -y --no-install-recommends \
+        python3-pip \
+        python3-dev \
+        build-essential \
+        libopenblas-dev \
+        liblapack-dev \
+        git \
+        gfortran \
+        gpg \
+        wget \
+        make \
+        ninja-build \
+        bash
+
+    echo -e "\e[34mINTEL COMPILER\e[0m"
+    wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | gpg --dearmor | tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
+    echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | tee /etc/apt/sources.list.d/oneAPI.list
+    apt update
+    apt install -y intel-oneapi-compiler-fortran
+    apt install -y intel-oneapi-mkl
+    ln -s /opt/intel/oneapi/compiler/latest/bin/ifx /opt/intel/oneapi/compiler/latest/bin/ifort
+    ln -s /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so
+    bash -c "source /opt/intel/oneapi/setvars.sh && which ifort"
+
+    echo -e "\e[34mPySCF\e[0m"
+    pip3 install pyscf
+
+    echo -e "\e[34mINSTALL QUACK\e[0m"
+    git clone https://github.com/pfloos/QuAcK.git --branch=master
+    export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+    export PYTHONPATH=/usr/local/lib/python3.10/dist-packages:$PYTHONPATH
+    cd QuAcK
+    export QUACK_ROOT=$PWD
+    bash -c "source /opt/intel/oneapi/setvars.sh && make"
+
+    echo -e "\e[34mCLEAN UP\e[0m"
+    apt clean && rm -rf /var/lib/apt/lists/*
+
+%environment
+    export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+    export PYTHONPATH=/usr/local/lib/python3.10/dist-packages:$PYTHONPATH
+    export QUACK_ROOT=$PWD
+
+%labels
+    Label QuAcK container
+    Author AbdAmmar
+    Version v0.1.0
+
+
+
