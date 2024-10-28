@@ -26,7 +26,7 @@ From: ubuntu:22.04
     apt install -y intel-oneapi-mkl
     ln -s /opt/intel/oneapi/compiler/latest/bin/ifx /opt/intel/oneapi/compiler/latest/bin/ifort
     ln -s /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so
-    bash -c "source /opt/intel/oneapi/setvars.sh && which ifort"
+    bash -c "source /opt/intel/oneapi/setvars.sh"
 
     echo -e "\e[34mPySCF\e[0m"
     pip3 install pyscf
