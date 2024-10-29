@@ -1,0 +1,46 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%labels
+    Author abd.ammar.phys@gmail.com
+
+%help
+    Container for running QuAcK
+
+%environment
+    export LANG="C"
+    export LANGUAGE=$LANG
+    export LC_ALL=$LANG
+    export OMP_NUM_THREADS=1
+
+%setup
+    mkdir -p ${APPTAINER_ROOTFS}/opt/install
+    cp environment.sh  ${APPTAINER_ROOTFS}/opt/
+    cp quack.def             \
+        install_compilers.sh \
+        install_pyscf.sh     \
+        install_quack.sh     \
+        cleanup_compilers.sh \
+        setup_image.sh       \
+        cleanup.sh           \
+        ${APPTAINER_ROOTFS}/opt/install
+
+%post
+    ARCH=$(uname -i)
+
+    cd /opt/install
+    ./setup_image.sh
+
+    apt update && apt install -y --no-install-recommends
+
+    ./install_compilers.sh
+    ./install_pyscf.sh
+    #./install_quack.sh
+    #./cleanup_compilers.sh
+
+    #./cleanup.sh
+
+%test
+    #ls /opt/QuAcK/Makefile || exit 1
+    #ls /opt/QuAcK/bin/QuAcK || exit 1
+

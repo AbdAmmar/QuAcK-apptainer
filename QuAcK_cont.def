@@ -43,9 +43,68 @@ From: ubuntu:22.04
     apt clean && rm -rf /var/lib/apt/lists/*
 
 %environment
-    export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
-    export PYTHONPATH=/usr/local/lib/python3.10/dist-packages:$PYTHONPATH
-    export QUACK_ROOT=$PWD
+    export PATH=/usr/local/bin:$PATH
+
+%runscript
+    #!/bin/bash
+
+    if [ "$1" == "generate-methods" ]; then
+
+        if [ -n "$2" ]; then
+            echo "$2" > QuAcK/input/methods
+        else
+            echo "Provide methds input"
+        fi
+
+    elif [ "$1" == "generate-options" ]; then
+
+        if [ -n "$2" ]; then
+            echo "$2" > QuAcK/input/options
+        else
+            echo "Provide options input"
+        fi
+
+    elif [ "$1" == "generate-geometry" ]; then
+
+        #ls
+        #ls QuAcK
+        #ls QuAcK/input
+        if [ -n "$2" ]; then
+            if [ -n "$3" ]; then
+                echo "$3" > QuAcK/mol/$2
+            else
+                echo "Provide geometry"
+            fi
+        else
+            echo "Provide molecule name"
+        fi
+
+    elif [ "$1" == "lunch-QuAcK" ]; then
+
+        if [ -n "$2" ]; then
+            if [ -n "$3" ]; then
+                if [ -n "$4" ]; then
+		    cd QuAcK
+                    ls
+                    #export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+                    #export PYTHONPATH=/usr/local/lib/python3.10/dist-packages:$PYTHONPATH
+                    #export QUACK_ROOT=$PWD
+                    python3.10 PyDuck.py --working_dir $2 -x $3 -b "$4"
+                else
+                    echo "Provide basis"
+                fi
+            else
+                echo "Provide molecule name"
+            fi
+       else
+            echo "Provide working_dir"
+        fi
+
+    else
+
+        echo "Invalid option."
+
+    fi
 
 %labels
     Label QuAcK container
