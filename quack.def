@@ -40,6 +40,5 @@ From: ubuntu:22.04
     apt clean && rm -rf /var/lib/apt/lists/*
 
 %test
-    #ls /opt/QuAcK/Makefile || exit 1
-    #ls /opt/QuAcK/bin/QuAcK || exit 1
+    ls /opt/QuAcK/bin/QuAcK || exit 1
 

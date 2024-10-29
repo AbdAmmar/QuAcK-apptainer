@@ -9,7 +9,7 @@ APT_NOT_REQUIRED="git make ninja-build"
 apt install -y $APT_REQUIRED $APT_NOT_REQUIRED
 
 git clone https://github.com/pfloos/QuAcK.git \
-    --branch=master --depth=1 --shallow-submodules
+    --branch=work_env --depth=1 --shallow-submodules
 
 
 cd /opt/QuAcK
