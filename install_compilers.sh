@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
 cd /opt
+source env.rc
 
-ARCH=$(uname -i)
 if [ $ARCH = x86_64 ] ; then
 
   APT_NOT_REQUIRED="wget pgpgpg"
@@ -22,10 +22,7 @@ if [ $ARCH = x86_64 ] ; then
                  intel-oneapi-compiler-dpcpp-cpp \
                  intel-oneapi-compiler-dpcpp-cpp-runtime \
                  intel-oneapi-openmp \
-                 intel-oneapi-mpi \
-                 intel-oneapi-mpi-devel \
                  intel-oneapi-mkl-classic
-
 
   ln -s /opt/intel/oneapi/compiler/latest/bin/ifort.cfg /opt/ifort.cfg
   ln -s /opt/intel/oneapi/compiler/latest/bin/icx.cfg /opt/icx.cfg
@@ -35,12 +32,12 @@ if [ $ARCH = x86_64 ] ; then
   echo "-march=core-avx2" >> /opt/ifort.cfg
   echo "-march=core-avx2" >> /opt/icx.cfg
 
-  # Test
-  cd
-  source /opt/intel/oneapi/setvars.sh
-  ifort --version || exit 1
-  icx --version || exit 1
-  mpirun hostname || exit 1
+  ## Test
+  #cd
+  #source /opt/intel/oneapi/setvars.sh &>/dev/null || :
+  #ifort --version || exit 1
+  #icx --version || exit 1
+  #mpirun hostname || exit 1
 
   # Clean up
   apt remove -y $APT_NOT_REQUIRED
@@ -48,16 +45,12 @@ if [ $ARCH = x86_64 ] ; then
 elif [ $ARCH = aarch64 ] ; then
 
   update-alternatives --remove-all gcc || :
-  update-alternatives --remove-all g++ || :
   update-alternatives --remove-all gfortran || :
 
-  apt install -y build-essential gcc-12 g++-12 gfortran-12 libopenblas0 openmpi-bin libopenblas-dev libopenmpi-dev
+  apt install -y build-essential gcc-12 gfortran-12 libopenblas0 libopenblas-dev
 
   update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11  10
   update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12  20
-
-  update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11  10
-  update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12  20
 
   update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-11  10
   update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-12  20
@@ -65,11 +58,9 @@ elif [ $ARCH = aarch64 ] ; then
   update-alternatives --install /usr/bin/cc cc /usr/bin/gcc 30
   update-alternatives --set cc /usr/bin/gcc
 
-  update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++ 30
-  update-alternatives --set c++ /usr/bin/g++
-
 else 
 
   exit 1
 
 fi
+

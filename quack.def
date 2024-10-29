@@ -15,14 +15,13 @@ From: ubuntu:22.04
 
 %setup
     mkdir -p ${APPTAINER_ROOTFS}/opt/install
-    cp environment.sh  ${APPTAINER_ROOTFS}/opt/
+    cp env.rc  ${APPTAINER_ROOTFS}/opt/
     cp quack.def             \
         install_compilers.sh \
         install_pyscf.sh     \
         install_quack.sh     \
         cleanup_compilers.sh \
         setup_image.sh       \
-        cleanup.sh           \
         ${APPTAINER_ROOTFS}/opt/install
 
 %post
@@ -35,10 +34,10 @@ From: ubuntu:22.04
 
     ./install_compilers.sh
     ./install_pyscf.sh
-    #./install_quack.sh
-    #./cleanup_compilers.sh
+    ./install_quack.sh
+    ./cleanup_compilers.sh
 
-    #./cleanup.sh
+    apt clean && rm -rf /var/lib/apt/lists/*
 
 %test
     #ls /opt/QuAcK/Makefile || exit 1
