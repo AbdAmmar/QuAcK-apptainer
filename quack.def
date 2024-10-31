@@ -11,7 +11,7 @@ From: ubuntu:22.04
     export LANG="C"
     export LANGUAGE=$LANG
     export LC_ALL=$LANG
-    export OMP_NUM_THREADS=1
+    #export OMP_NUM_THREADS=1
 
 %setup
     mkdir -p ${APPTAINER_ROOTFS}/opt/install
@@ -38,6 +38,12 @@ From: ubuntu:22.04
     ./cleanup_compilers.sh
 
     apt clean && rm -rf /var/lib/apt/lists/*
+
+%runscript
+    #!/bin/bash
+    . /opt/env.rc
+    cd /opt/QuAcK
+    exec "$@"
 
 %test
     ls /opt/QuAcK/bin/QuAcK || exit 1
