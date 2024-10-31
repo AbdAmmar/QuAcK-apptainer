@@ -46,7 +46,7 @@ Once you have built the Apptainer image, you can run QuAcK to perform calculatio
 
   To see all available options for the arguments, you can execute:
    ```bash
-   apptainer run --cleanenv --no-mount home,cwd --bind path_to_work_quack uack.sif python3 PyDuck.py --help
+   apptainer run --cleanenv --no-mount home,cwd --bind path_to_work_quack quack.sif python3 PyDuck.py --help
    ```
 
 ### Example
