@@ -9,18 +9,17 @@ The container allows users to easily install and execute QuAcK on HPC clusters w
 
 ## Building the Image
 
+Before starting, make sure you have Apptainer installed on your system.
+If not, you can install it by following the instructions from the [official Apptainer documentation](https://apptainer.org/docs/user/main/installation.html).
 To build the Apptainer image (SIF file) for QuAcK, follow these steps:
 
-1. **Install Apptainer**: Make sure you have Apptainer installed on your system.
-If not, you can install it by following the instructions from the [official Apptainer documentation](https://apptainer.org/docs/user/main/installation.html).
-
-3. **Clone the Repository**: Clone this repository to your machine.
+1. **Clone the Repository**: Clone this repository to your machine.
     ```bash
     git clone https://github.com/AbdAmmar/QuAck-apptainer.git
     cd QuAck-apptainer
     ```
 
-4. **Build the Image**: Use the Apptainer `build` command to create the SIF file.
+2. **Build the Image**: Use the Apptainer `build` command to create the SIF file.
     ```bash
     apptainer build quack.sif quack.def
     ```
