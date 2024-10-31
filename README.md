@@ -84,8 +84,8 @@ mkdir input && cd input
 ```
 Download the template files for `methods` and `options` from the QuAcK repository:
 ```bash
-wget https://github.com/pfloos/QuAcK/blob/master/input/options.default options
-wget https://github.com/pfloos/QuAcK/blob/master/input/methods.default methods
+curl -o options https://raw.githubusercontent.com/pfloos/QuAcK/master/input/options.default
+curl -o methods https://raw.githubusercontent.com/pfloos/QuAcK/master/input/methods.default
 ```
 Open the `methods` file and set `RHF` to `T` (True).
 
