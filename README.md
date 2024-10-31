@@ -1,5 +1,7 @@
 # QuAcK Apptainer Container
 
+<img src="logo/logo_quack.png"  width="250">
+
 ## Overview
 
 This repository provides an Apptainer (formerly Singularity) container for [QuAcK](https://github.com/pfloos/QuAcK/). 
@@ -102,4 +104,9 @@ apptainer run --cleanenv --no-mount home,cwd --bind $PWD/work_quack quack.sif py
 ```
 Here, the command `$PWD` ensures that you are providing the absolute path to the working directory.
 
+
+
+<img src="https://lcpq.github.io/PTEROSOR/img/ERC.png" width="200" />
+
+QuAcK is supported by the [PTEROSOR](https://lcpq.github.io/PTEROSOR/) project that has received funding from the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (Grant agreement No. 863481).
 
