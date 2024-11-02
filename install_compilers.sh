@@ -45,18 +45,25 @@ if [ $ARCH = x86_64 ] ; then
 elif [ $ARCH = aarch64 ] ; then
 
   update-alternatives --remove-all gcc || :
+  update-alternatives --remove-all g++ || :
   update-alternatives --remove-all gfortran || :
 
-  apt install -y build-essential gcc-12 gfortran-12 libopenblas0 libopenblas-dev
+  apt install -y build-essential gcc-12 g++-12 gfortran-12 libopenblas0 openmpi-bin libopenblas-dev libopenmpi-dev
 
   update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11  10
   update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12  20
+
+  update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11  10
+  update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12  20
 
   update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-11  10
   update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-12  20
 
   update-alternatives --install /usr/bin/cc cc /usr/bin/gcc 30
   update-alternatives --set cc /usr/bin/gcc
+
+  update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++ 30
+  update-alternatives --set c++ /usr/bin/g++
 
 else 
 
