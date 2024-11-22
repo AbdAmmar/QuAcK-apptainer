@@ -15,8 +15,8 @@ To build the Apptainer image (SIF file) for QuAcK, follow these steps:
 
 1. **Clone the Repository**: Clone this repository to your machine.
     ```bash
-    git clone https://github.com/AbdAmmar/QuAck-apptainer.git
-    cd QuAck-apptainer
+    git clone https://github.com/AbdAmmar/QuAcK-apptainer.git
+    cd QuAcK-apptainer
     ```
 
 2. **Build the Image**: Use the Apptainer `build` command to create the SIF file.
